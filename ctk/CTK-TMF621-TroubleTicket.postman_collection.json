@@ -1,0 +1,2019 @@
+{
+	"info": {
+		"_postman_id": "a9bd8ce1-59a6-401f-ab9f-99c0d7d46157",
+		"name": "CTK-TMF621-TroubleTicket",
+		"description": "This is Swagger UI environment generated for the TMF Trouble Ticket specification",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"_postman_id": "413eee6b-7e06-4f86-84d9-ec88d8701a69",
+			"name": "TC_Trou_N1 – Create new trouble ticket with minimum required information",
+			"item": [
+				{
+					"_postman_id": "5352e543-1405-4b8d-80f2-81a7842f690c",
+					"name": "Create a trouble ticket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bb6898d8-6a60-4d89-bffd-b1ae7964abe6",
+								"type": "text/javascript",
+								"exec": [
+									"// See: https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference",
+									"",
+									"// Testing POST method on {{scheme}}://{{host}}:{{port}}/tmf-api/troubleTicket/v2/troubleTicket",
+									"",
+									"pm.test('Content-Type is present', function() { pm.response.to.have.header('Content-Type') });",
+									"pm.test('Content-Type is application/json', function() { pm.response.headers.has('application/json') });",
+									"//Response Code 201-Created",
+									"pm.test(\"Status code is 201 (Conformance Profile page 16)\", function () { pm.response.to.have.status(201); });",
+									"",
+									"",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"if (Array.isArray(jsonData) && (jsonData.length > 0)) {",
+									"  jsonData.forEach(function(instance, index) {",
+									"      ",
+									"    pm.globals.set(\"IDTT1\", instance.id);",
+									"    pm.globals.set(\"HREFTT1\", instance.href);",
+									"    pm.globals.set(\"DESCRIPTIONTT1\", instance.description);",
+									"    pm.globals.set(\"TICKETTYPETT1\", instance.ticketType);",
+									"    pm.globals.set(\"SERVERITYTT1\", instance.severity);",
+									"",
+									"    // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance ' +index+ ' has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    ",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    ",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    ",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									"    ",
+									"  });",
+									"}",
+									"else {",
+									"    var instance = pm.response.json();",
+									"    ",
+									"    pm.globals.set(\"IDTT1\", instance.id);",
+									"    pm.globals.set(\"HREFTT1\", instance.href);",
+									"    pm.globals.set(\"DESCRIPTIONTT1\", instance.description);",
+									"    pm.globals.set(\"TICKETTYPETT1\", instance.ticketType);",
+									"    pm.globals.set(\"SERVERITYTT1\", instance.severity);",
+									"    ",
+									"    ",
+									"",
+									"    // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    ",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    ",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    ",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									"    ",
+									"}",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"<anytext>\",\n  \"severity\": \"High\",\n  \"ticketType\": \"device\"\n}"
+						},
+						"url": {
+							"raw": "{{TroubleTicketAPI}}/troubleTicket",
+							"host": [
+								"{{TroubleTicketAPI}}"
+							],
+							"path": [
+								"troubleTicket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "be7713b7-119e-4ff8-8d6f-aee741c105ec",
+					"name": "List all TroubleTickets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7cc803c6-b67e-4ea0-baee-a70ca0c68784",
+								"type": "text/javascript",
+								"exec": [
+									"// See: https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference",
+									"// Testing GET method on {{scheme}}://{{host}}:{{port}}/tmf-api/troubleTicket/v2/troubleTicket?fields={{fields}}&offset={{offset}}&limit={{limit}}",
+									"",
+									"pm.test('Content-Type is present', function() { pm.response.to.have.header('Content-Type') });",
+									"pm.test('Content-Type is application/json', function() { pm.response.headers.has('application/json') });",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('GET response has valid JSON body', function() { pm.response.to.have.jsonBody() });",
+									"",
+									"// Parse the JSON response",
+									"var jsonData = pm.response.json();",
+									"// TODO: jsonData might be an array of resources - need to detect and iterate if so",
+									"",
+									"if (Array.isArray(jsonData) && (jsonData.length > 0)) {",
+									"  jsonData.forEach(function(instance, index) {",
+									"",
+									"     // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT1\")){",
+									"        ",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT1\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT1\"));",
+									"            ",
+									"        });",
+									"    ",
+									"    }",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT2\")){",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT2\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT2\"));",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"  });",
+									"}",
+									"else {",
+									"     var instance = pm.response.json();",
+									"",
+									"    // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT1\")){",
+									"        ",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT1\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT1\"));",
+									"            ",
+									"        });",
+									"    ",
+									"    }",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT2\")){",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT2\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT2\"));",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"    ",
+									"  ",
+									"}",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{TroubleTicketAPI}}/troubleTicket",
+							"host": [
+								"{{TroubleTicketAPI}}"
+							],
+							"path": [
+								"troubleTicket"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"_postman_id": "0cbb5b64-67c6-4ffe-9a95-f0f0b44092cb",
+			"name": "TC_Trou_N2 – Create new trouble ticket with minimum set of parameters supported by server",
+			"item": [
+				{
+					"_postman_id": "8c4e7827-a30d-4299-a58f-78f79ce61b0c",
+					"name": "Create a trouble ticket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a1b2c7a3-8750-4a4b-bf33-1fb46f65831c",
+								"type": "text/javascript",
+								"exec": [
+									"// See: https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference",
+									"",
+									"// Testing POST method on {{scheme}}://{{host}}:{{port}}/tmf-api/troubleTicket/v2/troubleTicket",
+									"",
+									"pm.test('Content-Type is present', function() { pm.response.to.have.header('Content-Type') });",
+									"pm.test('Content-Type is application/json', function() { pm.response.headers.has('application/json') });",
+									"//Response Code 201-Created",
+									"pm.test(\"Status code is 201 (Conformance Profile page 16)\", function () { pm.response.to.have.status(201); });",
+									"",
+									"",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"if (Array.isArray(jsonData) && (jsonData.length > 0)) {",
+									"    var instance = jsonData[0];",
+									"      ",
+									"    pm.globals.set(\"IDTT2\", instance.id);",
+									"    pm.globals.set(\"HREFTT2\", instance.href);",
+									"    pm.globals.set(\"DESCRIPTIONTT2\", instance.description);",
+									"    pm.globals.set(\"TICKETTYPETT2\", instance.ticketType);",
+									"    pm.globals.set(\"SERVERITYTT2\", instance.severity);",
+									"",
+									"    // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance ' +index+ ' has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    ",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    ",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    ",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									"    ",
+									"  ",
+									"}",
+									"else {",
+									"    var instance = pm.response.json();",
+									"    ",
+									"    pm.globals.set(\"IDTT2\", instance.id);",
+									"    pm.globals.set(\"HREFTT2\", instance.href);",
+									"    pm.globals.set(\"DESCRIPTIONTT2\", instance.description);",
+									"    pm.globals.set(\"TICKETTYPETT2\", instance.ticketType);",
+									"    pm.globals.set(\"SERVERITYTT2\", instance.severity);",
+									"    ",
+									"    ",
+									"",
+									"    // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    ",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    ",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    ",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									"    ",
+									"}",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"description\": \"nanana\",\n\"severity\": \"Low\",\n\"ticketType\": \"connectivity\",\n\"status\": \"nanana\",\n\"externalId\": \"123\",\n\"note\":\n[\n{\n\"author\": \"writer n2_1\",\n\"text\": \"This is the first note in N2\"\n},\n{\"author\": \"writer n2_2\",\n\"text\": \"This is the second note in N2\"\n}\n]\n}"
+						},
+						"url": {
+							"raw": "{{TroubleTicketAPI}}/troubleTicket",
+							"host": [
+								"{{TroubleTicketAPI}}"
+							],
+							"path": [
+								"troubleTicket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "3f92488c-d928-47d7-acee-1a4e597593a0",
+					"name": "List all TroubleTickets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac9001c3-b99f-4746-b109-e7c21a612e06",
+								"type": "text/javascript",
+								"exec": [
+									"// See: https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference",
+									"// Testing GET method on {{scheme}}://{{host}}:{{port}}/tmf-api/troubleTicket/v2/troubleTicket?fields={{fields}}&offset={{offset}}&limit={{limit}}",
+									"",
+									"pm.test('Content-Type is present', function() { pm.response.to.have.header('Content-Type') });",
+									"pm.test('Content-Type is application/json', function() { pm.response.headers.has('application/json') });",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('GET response has valid JSON body', function() { pm.response.to.have.jsonBody() });",
+									"",
+									"// Parse the JSON response",
+									"var jsonData = pm.response.json();",
+									"// TODO: jsonData might be an array of resources - need to detect and iterate if so",
+									"",
+									"if (Array.isArray(jsonData) && (jsonData.length > 0)) {",
+									"  jsonData.forEach(function(instance, index) {",
+									"",
+									"     // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT1\")){",
+									"        ",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT1\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT1\"));",
+									"            ",
+									"        });",
+									"    ",
+									"    }",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT2\")){",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT2\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT2\"));",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"  });",
+									"}",
+									"else {",
+									"     var instance = pm.response.json();",
+									"",
+									"    // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									"      if (instance.id == pm.globals.get(\"IDTT1\")){",
+									"        ",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT1\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT1\"));",
+									"            ",
+									"        });",
+									"    ",
+									"    }",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT2\")){",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT2\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT2\"));",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"    ",
+									"  ",
+									"}",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{TroubleTicketAPI}}/troubleTicket",
+							"host": [
+								"{{TroubleTicketAPI}}"
+							],
+							"path": [
+								"troubleTicket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "221c9631-2bd6-46aa-89de-96cab4f04193",
+					"name": "Get trouble ticket by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d5ba3cd9-7d01-48e7-afb0-8f4e07c369bd",
+								"type": "text/javascript",
+								"exec": [
+									"// See: https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference",
+									"// Testing GET method on {{scheme}}://{{host}}:{{port}}/tmf-api/troubleTicket/v2/troubleTicket?fields={{fields}}&offset={{offset}}&limit={{limit}}",
+									"",
+									"pm.test('Content-Type is present', function() { pm.response.to.have.header('Content-Type') });",
+									"pm.test('Content-Type is application/json', function() { pm.response.headers.has('application/json') });",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('GET response has valid JSON body', function() { pm.response.to.have.jsonBody() });",
+									"",
+									"// Parse the JSON response",
+									"var jsonData = pm.response.json();",
+									"// TODO: jsonData might be an array of resources - need to detect and iterate if so",
+									"",
+									"if (Array.isArray(jsonData) && (jsonData.length > 0)) {",
+									"  jsonData.forEach(function(instance, index) {",
+									"",
+									"     // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									" ",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT1\")){",
+									"        ",
+									"        pm.test('ID ' + pm.globals.get(\"IDTT1\") + ' should not be returned by this get', function(){",
+									"            pm.expect(1).to.eql(0);",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"    ",
+									"    }",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT2\")){",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT2\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT2\"));",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"  });",
+									"}",
+									"else {",
+									"     var instance = pm.response.json();",
+									"",
+									"    // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT1\")){",
+									"        ",
+									"        pm.test('ID ' + pm.globals.get(\"IDTT1\") + ' should not be returned by this get', function(){",
+									"            pm.expect(1).to.eql(0);",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"    ",
+									"    }",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT2\")){",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT2\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT2\"));",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"    ",
+									"  ",
+									"}",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{TroubleTicketAPI}}/troubleTicket/{{IDTT2}}",
+							"host": [
+								"{{TroubleTicketAPI}}"
+							],
+							"path": [
+								"troubleTicket",
+								"{{IDTT2}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"_postman_id": "ee58a5de-72e4-440f-9f85-4a7cd40bf258",
+			"name": "TC_Trou_N3 – Search for trouble tickets with specific characteristics",
+			"item": [
+				{
+					"_postman_id": "8ce8b53f-f481-48f1-953b-86dcda99a98a",
+					"name": "List all TroubleTickets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c329285b-c2c0-435a-adca-fba664f85af9",
+								"type": "text/javascript",
+								"exec": [
+									"// See: https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference",
+									"// Testing GET method on {{scheme}}://{{host}}:{{port}}/tmf-api/troubleTicket/v2/troubleTicket?fields={{fields}}&offset={{offset}}&limit={{limit}}",
+									"",
+									"pm.test('Content-Type is present', function() { pm.response.to.have.header('Content-Type') });",
+									"pm.test('Content-Type is application/json', function() { pm.response.headers.has('application/json') });",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('GET response has valid JSON body', function() { pm.response.to.have.jsonBody() });",
+									"",
+									"// Parse the JSON response",
+									"var jsonData = pm.response.json();",
+									"// TODO: jsonData might be an array of resources - need to detect and iterate if so",
+									"",
+									"if (Array.isArray(jsonData) && (jsonData.length > 0)) {",
+									"  jsonData.forEach(function(instance, index) {",
+									"",
+									"     // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT1\")){",
+									"        ",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT1\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT1\"));",
+									"            ",
+									"        });",
+									"    ",
+									"    }",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT2\")){",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT2\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT2\"));",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"  });",
+									"}",
+									"else {",
+									"     var instance = pm.response.json();",
+									"",
+									"    // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									"      if (instance.id == pm.globals.get(\"IDTT1\")){",
+									"        ",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT1\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT1\"));",
+									"            ",
+									"        });",
+									"    ",
+									"    }",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT2\")){",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT2\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT2\"));",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"    ",
+									"  ",
+									"}",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"pm.test(\"ID1 is present on body\", function () {",
+									"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"IDTT1\"));",
+									"});",
+									"",
+									"pm.test(\"ID2 is present on body\", function () {",
+									"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"IDTT2\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{TroubleTicketAPI}}/troubleTicket",
+							"host": [
+								"{{TroubleTicketAPI}}"
+							],
+							"path": [
+								"troubleTicket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "295f51b0-0843-4d48-a68c-b5eb98eeeb85",
+					"name": "Get trouble ticket by specific Severity characteristics ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e38a2610-9346-44fe-9546-ce1ea1ab643b",
+								"type": "text/javascript",
+								"exec": [
+									"// See: https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference",
+									"// Testing GET method on {{scheme}}://{{host}}:{{port}}/tmf-api/troubleTicket/v2/troubleTicket?fields={{fields}}&offset={{offset}}&limit={{limit}}",
+									"",
+									"pm.test('Content-Type is present', function() { pm.response.to.have.header('Content-Type') });",
+									"pm.test('Content-Type is application/json', function() { pm.response.headers.has('application/json') });",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('GET response has valid JSON body', function() { pm.response.to.have.jsonBody() });",
+									"",
+									"// Parse the JSON response",
+									"var jsonData = pm.response.json();",
+									"// TODO: jsonData might be an array of resources - need to detect and iterate if so",
+									"",
+									"if (Array.isArray(jsonData) && (jsonData.length > 0)) {",
+									"  jsonData.forEach(function(instance, index) {",
+									"",
+									"     // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									"   ",
+									"    if (instance.id == pm.globals.get(\"IDTT2\")){",
+									"        ",
+									"        pm.test('ID ' + pm.globals.get(\"IDTT2\") + ' should not be returned by this get', function(){",
+									"            pm.expect(1).to.eql(0);",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT1\")){",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT1\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT1\"));",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"  });",
+									"}",
+									"else {",
+									"     var instance = pm.response.json();",
+									"",
+									"    // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT2\")){",
+									"        ",
+									"        pm.test('ID ' + pm.globals.get(\"IDTT2\") + ' should not be returned by this get', function(){",
+									"            pm.expect(1).to.eql(0);",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"    ",
+									"    }",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT1\")){",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT1\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT1\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT1\"));",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"    ",
+									"  ",
+									"}",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{TroubleTicketAPI}}/troubleTicket?severity=High",
+							"host": [
+								"{{TroubleTicketAPI}}"
+							],
+							"path": [
+								"troubleTicket"
+							],
+							"query": [
+								{
+									"key": "severity",
+									"value": "High"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "51fa929d-0fe4-4200-b2bf-12b1eca365e6",
+					"name": "Get trouble ticket by specific Type characteristics",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fdf6d7e9-a5ea-4578-a6d5-14a2cbafeb3b",
+								"type": "text/javascript",
+								"exec": [
+									"// See: https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference",
+									"// Testing GET method on {{scheme}}://{{host}}:{{port}}/tmf-api/troubleTicket/v2/troubleTicket?fields={{fields}}&offset={{offset}}&limit={{limit}}",
+									"",
+									"pm.test('Content-Type is present', function() { pm.response.to.have.header('Content-Type') });",
+									"pm.test('Content-Type is application/json', function() { pm.response.headers.has('application/json') });",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('GET response has valid JSON body', function() { pm.response.to.have.jsonBody() });",
+									"",
+									"// Parse the JSON response",
+									"var jsonData = pm.response.json();",
+									"// TODO: jsonData might be an array of resources - need to detect and iterate if so",
+									"",
+									"if (Array.isArray(jsonData) && (jsonData.length > 0)) {",
+									"  jsonData.forEach(function(instance, index) {",
+									"",
+									"     // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									"   ",
+									"    if (instance.id == pm.globals.get(\"IDTT1\")){",
+									"        ",
+									"        pm.test('ID ' + pm.globals.get(\"IDTT1\") + ' should not be returned by this get', function(){",
+									"            pm.expect(1).to.eql(0);",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT2\")){",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT2\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT2\"));",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"  });",
+									"}",
+									"else {",
+									"     var instance = pm.response.json();",
+									"",
+									"    // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description', 'severity', 'ticketType', 'id', 'href' ];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    pm.test('Response has id attribute', function() { pm.expect(instance.id).to.be.a('string'); });",
+									"    pm.test('Response has href attribute', function() { pm.expect(instance.href).to.be.a('string'); });",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    pm.test('Response has ticketType attribute', function() { pm.expect(instance.ticketType).to.be.a('string'); });",
+									"    pm.test('Response has severity attribute', function() { pm.expect(instance.severity).to.be.a('string'); });",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT1\")){",
+									"        ",
+									"        pm.test('ID ' + pm.globals.get(\"IDTT1\") + ' should not be returned by this get', function(){",
+									"            pm.expect(1).to.eql(0);",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"    ",
+									"    }",
+									"    ",
+									"    if (instance.id == pm.globals.get(\"IDTT2\")){",
+									"        pm.test('id equal Post', function(){",
+									"            pm.expect(instance.id).to.eql(pm.globals.get(\"IDTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('href equal Post', function(){",
+									"           pm.expect(instance.href).to.eql(pm.globals.get(\"HREFTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT2\"));",
+									"            ",
+									"        });",
+									"           ",
+									"        pm.test('ticketType equal Post', function(){",
+									"           pm.expect(instance.ticketType).to.eql(pm.globals.get(\"TICKETTYPETT2\"));",
+									"            ",
+									"        });",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT2\"));",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"    ",
+									"  ",
+									"}",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{TroubleTicketAPI}}/troubleTicket?ticketType=connectivity",
+							"host": [
+								"{{TroubleTicketAPI}}"
+							],
+							"path": [
+								"troubleTicket"
+							],
+							"query": [
+								{
+									"key": "ticketType",
+									"value": "connectivity"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"_postman_id": "067f2a1d-ba6a-4192-a125-dcb5df78eb00",
+			"name": "TC_Trou_N4 – Filtered retrieval of Tickets",
+			"item": [
+				{
+					"_postman_id": "d1bc7bac-fa9a-4a44-9657-6eb8876ed14e",
+					"name": "Get trouble ticket's filtered field (description) by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "78412367-cee7-4339-b501-597193e63624",
+								"type": "text/javascript",
+								"exec": [
+									"// See: https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference",
+									"// Testing GET method on {{scheme}}://{{host}}:{{port}}/tmf-api/troubleTicket/v2/troubleTicket?fields={{fields}}&offset={{offset}}&limit={{limit}}",
+									"",
+									"pm.test('Content-Type is present', function() { pm.response.to.have.header('Content-Type') });",
+									"pm.test('Content-Type is application/json', function() { pm.response.headers.has('application/json') });",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('GET response has valid JSON body', function() { pm.response.to.have.jsonBody() });",
+									"",
+									"// Parse the JSON response",
+									"var jsonData = pm.response.json();",
+									"// TODO: jsonData might be an array of resources - need to detect and iterate if so",
+									"",
+									"if (Array.isArray(jsonData) && (jsonData.length > 0)) {",
+									"  jsonData.forEach(function(instance, index) {",
+									"      ",
+									"  ",
+									"",
+									"     // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description'];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    ",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    ",
+									"    ",
+									"    pm.test('Only description on body', function(){",
+									"       pm.expect(Object.keys(instance).length).to.eql(requiredAttributes.length);",
+									"        ",
+									"    });",
+									"    ",
+									"    if (instance.description == pm.globals.get(\"DESCRIPTIONTT2\")){",
+									"        ",
+									"        pm.test('DESCRIPTION ' + pm.globals.get(\"DESCRIPTIONTT2\") + ' should not be returned by this get', function(){",
+									"            pm.expect(1).to.eql(0);",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"    if (instance.description == pm.globals.get(\"DESCRIPTIONTT1\")){",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT1\"));",
+									"            ",
+									"        });",
+									"        ",
+									"    }",
+									"    ",
+									"    ",
+									"    ",
+									"  });",
+									"}",
+									"else {",
+									"     var instance = pm.response.json();",
+									"",
+									"    // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description'];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    pm.test('Only description on body', function(){",
+									"           pm.expect(Object.keys(instance).length).to.eql(requiredAttributes.length);",
+									"            ",
+									"        });",
+									"    ",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    ",
+									"    if (instance.description == pm.globals.get(\"DESCRIPTIONTT2\")){",
+									"        ",
+									"        pm.test('DESCRIPTION ' + pm.globals.get(\"DESCRIPTIONTT2\") + ' should not be returned by this get', function(){",
+									"            pm.expect(1).to.eql(0);",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"    if (instance.description == pm.globals.get(\"DESCRIPTIONTT1\")){",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT1\"));",
+									"            ",
+									"        });",
+									"        ",
+									"    }",
+									"    ",
+									"    ",
+									"  ",
+									"}",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{TroubleTicketAPI}}/troubleTicket/{{IDTT1}}?fields=description",
+							"host": [
+								"{{TroubleTicketAPI}}"
+							],
+							"path": [
+								"troubleTicket",
+								"{{IDTT1}}"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "description"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"_postman_id": "5a06f055-19f9-49f2-882e-cd80a84e092f",
+					"name": "Get trouble ticket's filtered fields (severity,status)  by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "98fed0cc-9ebb-4b89-a181-3752c12432af",
+								"type": "text/javascript",
+								"exec": [
+									"// See: https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference",
+									"// Testing GET method on {{scheme}}://{{host}}:{{port}}/tmf-api/troubleTicket/v2/troubleTicket?fields={{fields}}&offset={{offset}}&limit={{limit}}",
+									"",
+									"pm.test('Content-Type is present', function() { pm.response.to.have.header('Content-Type') });",
+									"pm.test('Content-Type is application/json', function() { pm.response.headers.has('application/json') });",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('GET response has valid JSON body', function() { pm.response.to.have.jsonBody() });",
+									"",
+									"// Parse the JSON response",
+									"var jsonData = pm.response.json();",
+									"// TODO: jsonData might be an array of resources - need to detect and iterate if so",
+									"",
+									"if (Array.isArray(jsonData) && (jsonData.length > 0)) {",
+									"  jsonData.forEach(function(instance, index) {",
+									"      ",
+									"  ",
+									"",
+									"     // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'severity', 'status'];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    ",
+									"",
+									"    ",
+									"    ",
+									"    pm.test('Only severity and status on body', function(){",
+									"       pm.expect(Object.keys(instance).length).to.eql(requiredAttributes.length);",
+									"        ",
+									"    });",
+									"    ",
+									"    if (instance.severity == pm.globals.get(\"SERVERITYTT1\")){",
+									"        ",
+									"        pm.test('SEVERITY ' + pm.globals.get(\"SERVERITYTT1\") + ' should not be returned by this get', function(){",
+									"            pm.expect(1).to.eql(0);",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"    ",
+									"    ",
+									"    if (instance.severity == pm.globals.get(\"SERVERITYTT2\")){",
+									"           ",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT2\"));",
+									"            ",
+									"        });",
+									"        ",
+									"    }",
+									"    ",
+									"    ",
+									"    ",
+									"  });",
+									"}",
+									"else {",
+									"     var instance = pm.response.json();",
+									"",
+									"   // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'severity', 'status'];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    // Checking all remaining possible attributes for TroubleTicket, taken from the Swagger file",
+									"    ",
+									"",
+									"    ",
+									"    pm.test('Only severity and status on body', function(){",
+									"       pm.expect(Object.keys(instance).length).to.eql(requiredAttributes.length);",
+									"        ",
+									"    });",
+									"    ",
+									"    if (instance.severity == pm.globals.get(\"SERVERITYTT1\")){",
+									"        ",
+									"        pm.test('SEVERITY ' + pm.globals.get(\"SERVERITYTT1\") + ' should not be returned by this get', function(){",
+									"            pm.expect(1).to.eql(0);",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"    ",
+									"    ",
+									"    if (instance.severity == pm.globals.get(\"SERVERITYTT2\")){",
+									"           ",
+									"        ",
+									"        pm.test('severity equal Post', function(){",
+									"           pm.expect(instance.severity).to.eql(pm.globals.get(\"SERVERITYTT2\"));",
+									"            ",
+									"        });",
+									"        ",
+									"    }",
+									"    ",
+									"    ",
+									"  ",
+									"}",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{TroubleTicketAPI}}/troubleTicket/{{IDTT2}}?fields=severity,status",
+							"host": [
+								"{{TroubleTicketAPI}}"
+							],
+							"path": [
+								"troubleTicket",
+								"{{IDTT2}}"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "severity,status"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"_postman_id": "2c2680a0-4e85-4ce7-83d7-8b55c21c325f",
+			"name": "TC_Trou_N5 – Filtered Search and Filtered data response",
+			"item": [
+				{
+					"_postman_id": "fbb2588e-4c04-4743-8139-d686a5142fda",
+					"name": "Get trouble ticket's by severity and filter by description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4a99129b-f640-4d04-86bb-a339ce51c12e",
+								"type": "text/javascript",
+								"exec": [
+									"// See: https://www.getpostman.com/docs/v6/postman/scripts/postman_sandbox_api_reference",
+									"// Testing GET method on {{scheme}}://{{host}}:{{port}}/tmf-api/troubleTicket/v2/troubleTicket?fields={{fields}}&offset={{offset}}&limit={{limit}}",
+									"",
+									"pm.test('Content-Type is present', function() { pm.response.to.have.header('Content-Type') });",
+									"pm.test('Content-Type is application/json', function() { pm.response.headers.has('application/json') });",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('GET response has valid JSON body', function() { pm.response.to.have.jsonBody() });",
+									"",
+									"// Parse the JSON response",
+									"var jsonData = pm.response.json();",
+									"// TODO: jsonData might be an array of resources - need to detect and iterate if so",
+									"",
+									"if (Array.isArray(jsonData) && (jsonData.length > 0)) {",
+									"  jsonData.forEach(function(instance, index) {",
+									"      ",
+									"  ",
+									"",
+									"   // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description'];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    pm.test('Only description on body', function(){",
+									"           pm.expect(Object.keys(instance).length).to.eql(requiredAttributes.length);",
+									"            ",
+									"        });",
+									"    ",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    ",
+									"    if (instance.description == pm.globals.get(\"DESCRIPTIONTT2\")){",
+									"        ",
+									"        pm.test('DESCRIPTION ' + pm.globals.get(\"DESCRIPTIONTT2\") + ' should not be returned by this get', function(){",
+									"            pm.expect(1).to.eql(0);",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"    if (instance.description == pm.globals.get(\"DESCRIPTIONTT1\")){",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT1\"));",
+									"            ",
+									"        });",
+									"        ",
+									"    }",
+									"    ",
+									"    ",
+									"    ",
+									"    ",
+									"  });",
+									"}",
+									"else {",
+									"     var instance = pm.response.json();",
+									"",
+									"    // Mandatory attributes listed in \"definitions.TroubleTicket.required\" are [description,severity,ticketType]",
+									"    var requiredAttributes = [ 'description'];",
+									"    pm.test('Instance has all mandatory attributes', function() { pm.expect(Object.keys(instance)).to.include.members(requiredAttributes) } );",
+									"",
+									"    pm.test('Only description on body', function(){",
+									"           pm.expect(Object.keys(instance).length).to.eql(requiredAttributes.length);",
+									"            ",
+									"        });",
+									"    ",
+									"    pm.test('Response has description attribute', function() { pm.expect(instance.description).to.be.a('string'); });",
+									"    ",
+									"    if (instance.description == pm.globals.get(\"DESCRIPTIONTT2\")){",
+									"        ",
+									"        pm.test('DESCRIPTION ' + pm.globals.get(\"DESCRIPTIONTT2\") + ' should not be returned by this get', function(){",
+									"            pm.expect(1).to.eql(0);",
+									"            ",
+									"        });",
+									"    }",
+									"    ",
+									"    if (instance.description == pm.globals.get(\"DESCRIPTIONTT1\")){",
+									"           ",
+									"        ",
+									"        pm.test('description equal Post', function(){",
+									"           pm.expect(instance.description).to.eql(pm.globals.get(\"DESCRIPTIONTT1\"));",
+									"            ",
+									"        });",
+									"        ",
+									"    }",
+									"    ",
+									"    ",
+									"  ",
+									"}",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{TroubleTicketAPI}}/troubleTicket/{{IDTT1}}?fields=description",
+							"host": [
+								"{{TroubleTicketAPI}}"
+							],
+							"path": [
+								"troubleTicket",
+								"{{IDTT1}}"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "description"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"_postman_id": "736812d3-5a9a-4e34-883a-bb23bba772a3",
+			"name": "TC_Trou_E1 – Unknown Trouble Ticket identifier",
+			"item": [
+				{
+					"_postman_id": "aa4ca57f-7c0f-4cd8-95f4-8e4263902d97",
+					"name": "Search for a ID that does not exist to get 404 error",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a805776c-edf5-4e58-baee-7e7bd5147f2e",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{TroubleTicketAPI}}/troubleTicket/46846846846",
+							"host": [
+								"{{TroubleTicketAPI}}"
+							],
+							"path": [
+								"troubleTicket",
+								"46846846846"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"_postman_id": "9af76c6a-8a7e-4f66-95ca-64a61912b821",
+			"name": "TC_Trou_E2 – Invalid Request – Missing mandatory parameter",
+			"item": [
+				{
+					"_postman_id": "b4d07e71-0af6-41a9-af45-4d844ed67201",
+					"name": "TC_E2_Post with missing mandatory parameters Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f34d7337-ad31-464c-8993-e14e26d2034d",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json;charset=utf-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;charset=utf-8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"description\": \"<anytext>\",\n\"severity\": \"High\"\n}"
+						},
+						"url": {
+							"raw": "{{TroubleTicketAPI}}/troubleTicket",
+							"host": [
+								"{{TroubleTicketAPI}}"
+							],
+							"path": [
+								"troubleTicket"
+							]
+						},
+						"description": "This operation creates a service qualification entity.\nMandatory and non mandatory attributes, additional rules and default values are provided in the specifications document.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"_postman_id": "8f28bf76-34c4-4ba0-8731-696226a45020",
+			"name": "TC_Trou_E3 – Invalid Request – Missing parameter mandatory in context",
+			"item": [
+				{
+					"_postman_id": "4bbb6aea-e621-4c3d-a03d-2250b9467b32",
+					"name": "TC_E3_Post with missing mandatory (in Context) parameters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "75f30127-0a53-413f-a71f-896866a05909",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json;charset=utf-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;charset=utf-8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"description\": \"<anytext>\",\n\"severity\": \"High\",\n\"ticketType\": \"problem\",\n\"note\":\n{\n\"author\": \"writer e3_1\"\n}\n}"
+						},
+						"url": {
+							"raw": "{{TroubleTicketAPI}}/troubleTicket/",
+							"host": [
+								"{{TroubleTicketAPI}}"
+							],
+							"path": [
+								"troubleTicket",
+								""
+							]
+						},
+						"description": "This operation creates a service qualification entity.\nMandatory and non mandatory attributes, additional rules and default values are provided in the specifications document.\n\nSpecific business errors for current operation will be encapsulated in\n\nHTTP Response 422 Unprocessable entity\n"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
